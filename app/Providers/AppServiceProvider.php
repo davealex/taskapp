@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // swap out LengthAwarePaginator class for custom child
+        $this->app->bind(
+            \Illuminate\Pagination\LengthAwarePaginator::class,
+            \App\Services\ParamAwareLengthAwarePaginator::class
+        );
     }
 }
