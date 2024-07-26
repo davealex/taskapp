@@ -17,11 +17,10 @@ class RegisterController extends Controller implements RegisterResponse
      */
     public function toResponse($request): \Illuminate\Http\JsonResponse
     {
-        $user = User::where('email', $request->email)->first();
-
         return response()->json([
             'message' => 'Your account was successfully created',
             'data' => [
+                'user' => $user = User::findByEmail($request->email),
                 'token' => $user->createToken($request->email)->plainTextToken
             ],
         ], 201);
