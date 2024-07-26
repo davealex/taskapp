@@ -54,4 +54,14 @@ class User extends Authenticatable
         return self::where('email', $email)
             ->first();
     }
+
+    /**
+     * User's published tasks
+     *
+     * @return HasMany
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LogoutController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -24,7 +24,14 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LogoutController::class, 'destroy']);
-    Route::get('/user', function (Request $request) {
-        return $request->user();
+
+    Route::prefix('tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index']);
+        Route::get('/{ref}', [TaskController::class, 'show']);
+        Route::get('/create', [TaskController::class, 'create']);
+        Route::post('/store', [TaskController::class, 'store']);
+        Route::patch('/{ref}/update', [TaskController::class, 'update']);
+        Route::patch('/{ref}/edit', [TaskController::class, 'edit']);
+        Route::delete('/{ref}/delete', [TaskController::class, 'destroy']);
     });
 });
